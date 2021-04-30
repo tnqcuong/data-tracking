@@ -41,3 +41,51 @@ router.get("/", function (req, res, next) {
 });
 
 module.exports = router;
+
+// async function getCandleStickInfo(symbolVal) {
+//   let payload = { symbol: symbolVal, interval: "5m", limit: "1" };
+//   const params = new url.URLSearchParams(payload);
+
+//   const config = {
+//     method: "get",
+//     url: baseUrl + apiUrl.candleStick + "?" + params.toString(),
+//     headers: { "Content-Type": "application/json" },
+//   };
+
+//   let res = await axios(config);
+//   return res.data;
+// }
+
+// function mainFlow() {
+//   //console.clear();
+//   console.log("=====================");
+//   let symbolList = [];
+//   let result = [];
+//   let exchangeInfo = getExchangeInfo().then((res) => {
+//       let dataList = res.symbols;
+//       for (let i = 0; i < dataList.length; i++) {
+//         if (dataList[i].quoteAsset == "USDT") {
+//           symbolList.push(dataList[i]);
+//         }
+//       }
+
+//       for (let j = 0; j < symbolList.length; j++) {
+//         getCandleStickInfo(symbolList[j].symbol).then((res) => {
+//             dataList = res;
+//             for (let i = 0; i < dataList.length; i++) {
+//               if (dataList[i][4] - dataList[i][1] > 0) {
+//                 let percentUp =
+//                   ((dataList[i][4] - dataList[i][1]) / dataList[i][1]) * 100;
+//                 if (percentUp > 1) {
+//                   result.push(symbolList[j]);
+//                   console.log(symbolList[j].baseAsset + " : " + percentUp);
+//                   break;
+//                 }
+//               }
+//             }
+//         });
+//       }
+//   });
+// }
+
+// setInterval(() => mainFlow(), 60*1000);
