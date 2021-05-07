@@ -31,7 +31,7 @@ function getExchangeInfo() {
       let dataList = res.symbols;
       let symbolList = [];
       for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i].quoteAsset == "USDT"  && !dataList[i].baseAsset.includes('LEND') && !dataList[i].baseAsset.includes('BEAR') && !dataList[i].baseAsset.includes('BULL') && !dataList[i].baseAsset.includes('UP') && !dataList[i].baseAsset.includes('DOWN') && dataList[i].baseAsset != 'BCHSV' && dataList[i].baseAsset != 'STORM' && dataList[i].baseAsset != 'ERD' && dataList[i].baseAsset != 'XZC') {
+        if (dataList[i].quoteAsset == "USDT"  && !dataList[i].baseAsset.includes('BCC') && !dataList[i].baseAsset.includes('STRAT') && !dataList[i].baseAsset.includes('LEND') && !dataList[i].baseAsset.includes('BEAR') && !dataList[i].baseAsset.includes('BULL') && !dataList[i].baseAsset.includes('UP') && !dataList[i].baseAsset.includes('DOWN') && dataList[i].baseAsset != 'BCHSV' && dataList[i].baseAsset != 'STORM' && dataList[i].baseAsset != 'ERD' && dataList[i].baseAsset != 'XZC') {
           symbolList.push(dataList[i]);
         }
       }
@@ -49,6 +49,9 @@ function getExchangeInfo() {
               if (dataList[i][4] - dataList[i][1] > 0) {
                 count++;
                 let percentUp = ((dataList[i][4] - dataList[i][1]) / dataList[i][1]) * 100;
+                if (percentUp > 1) {
+                  console.log('==SUPER==1m==: ' + symbolList[j].baseAsset + " : " + percentUp);
+                }
                 if (percentUp > 0.2) {
                   if(count == limit){
                     console.log('==1m==: ' + symbolList[j].baseAsset + " : " + percentUp);
@@ -61,7 +64,6 @@ function getExchangeInfo() {
             }
           }
         });
-
 
 
         // getCandleStickInfo(symbolList[j].symbol, '1m').then((res) => {
@@ -136,6 +138,63 @@ function getExchangeInfo() {
   return res;
 }
 
+function getExchangeInfoIn5m() {
+  let res;
+
+  const config = {
+    method: "get",
+    url: baseUrl + apiUrl.exchangeInfo,
+    headers: headersParams,
+  };
+
+  axios(config)
+    .then((response) => {
+      // console.clear();
+      console.log('===========================')
+      res = response.data;
+      let dataList = res.symbols;
+      let symbolList = [];
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i].quoteAsset == "USDT"  && !dataList[i].baseAsset.includes('LEND') && !dataList[i].baseAsset.includes('BEAR') && !dataList[i].baseAsset.includes('BULL') && !dataList[i].baseAsset.includes('UP') && !dataList[i].baseAsset.includes('DOWN') && dataList[i].baseAsset != 'BCHSV' && dataList[i].baseAsset != 'STORM' && dataList[i].baseAsset != 'ERD' && dataList[i].baseAsset != 'XZC') {
+          symbolList.push(dataList[i]);
+        }
+      }
+      
+
+      let result = [];
+
+      for (let j = 0; j < symbolList.length; j++) {
+        let limit = 2;
+        getCandleStickInfoNew(symbolList[j].symbol, '5m', limit).then((res) => {
+          if(res.data){
+            dataList = res.data;
+            let count = 0;
+            for (let i = 0; i < dataList.length; i++) {
+              if (dataList[i][4] - dataList[i][1] > 0) {
+                count++;
+                let percentUp = ((dataList[i][4] - dataList[i][1]) / dataList[i][1]) * 100;
+                if (percentUp > 1) {
+                  console.log('==SUPER==5m==: ' + symbolList[j].baseAsset + " : " + percentUp);
+                }
+                if (percentUp > 0.2) {
+                  if(count == limit){
+                    console.log('==5m==: ' + symbolList[j].baseAsset + " : " + percentUp);
+                  }
+                }
+                else {
+                  break;
+                }
+              }
+            }
+          }
+        });
+      }
+    }, (error) => {
+    });
+
+  return res;
+}
+
 async function getCandleStickInfo(symbolVal, time) {
   
   let payload = {
@@ -184,7 +243,7 @@ async function getCandleStickInfoNew(symbolVal, time, limit) {
   }
 }
 
-//  getExchangeInfo();
+//  getExchangeInfoIn5m();
 setInterval(() => getExchangeInfo(), 60*1000);
 
 //setInterval(() => dataTracking(), 1*1000);
