@@ -113,7 +113,7 @@ function mainFlow(){
     // getCandleIn(symbolList, '5m', '1', 1);
     //setInterval(function() { getCandleIn("USDT" ,symbolStringUSDT.split(','), '1m', '2', 1.3); }, 60*1000);
     //setInterval(function() { getCandleIn("BUSD" ,symbolStringUSDT.split(','), '1m', '2', 1.7); }, 60*1000);
-    setInterval(function() { bot.telegram.sendMessage('1724440021', 'Bot is still alive.. ' + getCurrentTime(), {});},60*1000);
+    setInterval(function() { bot.telegram.sendMessage('1724440021', 'Bot is still alive.. ' + getCurrentTime(), {});},10*1000);
     // setInterval(function() {
     //     getCurrentTime();
     //     getCandleIn("BUSD" ,symbolStringUSDT.split(','), '1m', '2', 1);
