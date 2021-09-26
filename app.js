@@ -89,7 +89,8 @@ function getCurrentTime(){
 
     // prints date & time in YYYY-MM-DD HH:MM:SS format
     let timeString = year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
-    return timeString;
+    //return timeString;
+    return new Date().toLocaleString("en-US", {timeZone: "Asia/Ho_Chi_Minh"});
 }
 
 
